@@ -64,10 +64,11 @@ def get_angle():
 
 def main():
 	while True:
+        start = time.time()
 		angle = get_angle()
 		frame = get_frame()
 		raw_data.append([frame, angle])
-		print(frame.shape[0], frame.shape[1], angle)
+		print(frame.shape[0], frame.shape[1], angle, 1/(time.time() - start))
 
         # if cv2.waitKey(1) & 0xFF == ord('q'):
         #     break   
