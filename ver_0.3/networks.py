@@ -1,53 +1,9 @@
-""" AlexNet.
-References:
-    - Alex Krizhevsky, Ilya Sutskever & Geoffrey E. Hinton. ImageNet
-    Classification with Deep Convolutional Neural Networks. NIPS, 2012.
-Links:
-    - [AlexNet Paper](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
-"""
-
-def AlexNet(height, width, LR):
-
-	import tflearn
-	from tflearn.layers.core import input_data, dropout, fully_connected
-	from tflearn.layers.conv import conv_2d, max_pool_2d
-	from tflearn.layers.normalization import local_response_normalization
-	from tflearn.layers.estimator import regression
-
-	# Building 'AlexNet'
-	network = input_data(shape=[None, height, width, 5])
-	network = conv_2d(network, 96, 11, strides=4, activation='relu')
-	network = max_pool_2d(network, 3, strides=2)
-	network = local_response_normalization(network)
-	network = conv_2d(network, 256, 5, activation='relu')
-	network = max_pool_2d(network, 3, strides=2)
-	network = local_response_normalization(network)
-	network = conv_2d(network, 384, 3, activation='relu')
-	network = conv_2d(network, 384, 3, activation='relu')
-	network = conv_2d(network, 256, 3, activation='relu')
-	network = max_pool_2d(network, 3, strides=2)
-	network = local_response_normalization(network)
-	network = fully_connected(network, 4096, activation='tanh')
-	network = dropout(network, 0.5)
-	network = fully_connected(network, 4096, activation='tanh')
-	network = dropout(network, 0.5)
-	network = fully_connected(network, 1, activation='softmax')
-
-	network = regression(network, optimizer='momentum',
-		             loss='mean_square',
-		             learning_rate=LR)
-	# Model
-	model = tflearn.DNN(network, checkpoint_path='model_alexnet',
-		            max_checkpoints=1, tensorboard_verbose=0)
-
-	return model
-
-	"""
-	model.fit(X, Y, n_epoch=1000, validation_set=0.1, shuffle=True,
-		  show_metric=True, batch_size=64, snapshot_step=200,
-		  snapshot_epoch=False, run_id='alexnet_oxflowers17')
-	"""
-
+import tflearn
+from tflearn.layers.core import input_data, dropout, fully_connected
+from tflearn.layers.conv import conv_2d, max_pool_2d, avg_pool_2d
+from tflearn.layers.normalization import local_response_normalization
+from tflearn.layers.merge_ops import merge
+from tflearn.layers.estimator import regression
 
 def googLeNet(height, width, LR):
 
@@ -58,15 +14,8 @@ def googLeNet(height, width, LR):
 	Links:
 	    - [GoogLeNet Paper](http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf)
 	"""
-
-	import tflearn
-	from tflearn.layers.core import input_data, dropout, fully_connected
-	from tflearn.layers.conv import conv_2d, max_pool_2d, avg_pool_2d
-	from tflearn.layers.normalization import local_response_normalization
-	from tflearn.layers.merge_ops import merge
-	from tflearn.layers.estimator import regression
-
-	network = input_data(shape=[None,height, width, 5])
+	# image in the array form the height comes first and then the width
+	network = input_data(shape=[None,height, width, 1])
 	conv1_7_7 = conv_2d(network, 64, 7, strides=2, activation='relu', name = 'conv1_7_7_s2')
 	pool1_3_3 = max_pool_2d(conv1_7_7, 3,strides=2)
 	pool1_3_3 = local_response_normalization(pool1_3_3)
@@ -178,14 +127,13 @@ def googLeNet(height, width, LR):
 	pool5_7_7 = avg_pool_2d(inception_5b_output, kernel_size=7, strides=1)
 	pool5_7_7 = dropout(pool5_7_7, 0.4)
 
-	loss = fully_connected(pool5_7_7, 1,activation='softmax')
+	loss = fully_connected(pool5_7_7, 1,activation='linear')
 
-	network = regression(loss, optimizer='momentum',
+	network = regression(loss, optimizer='adam',
 		             loss='mean_square',
-		             learning_rate=LR)
+		             learning_rate=LR, metirc=R2)
 
-	model = tflearn.DNN(network, checkpoint_path='model_googlenet',
-		            max_checkpoints=1, tensorboard_verbose=0)
+	model = tflearn.DNN(network, tensorboard_verbose=0)
 
 	return model
 	
