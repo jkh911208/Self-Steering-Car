@@ -29,7 +29,7 @@ def get_frame():
 	# change the color to gray
 	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-	# change the resolution (256*141), later cut the sky
+	# change the resolution (256*141)
 	frame = cv2.resize(frame,(0,0),fx=0.8, fy=0.8)
 	
 	return frame
