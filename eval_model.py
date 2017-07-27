@@ -1,6 +1,8 @@
 import numpy as np
 import os
 
+from networks import googLeNet
+
 WIDTH = 66
 HEIGHT = 256
 LR = 1e-3
@@ -45,14 +47,18 @@ for file in file_list:
 					#print(temp_x.shape)
 					eval_x.append([temp_x])
 					eval_y.append([data[1]])
-			if cv2.waitKey(1) & 0xFF == ord('q'):
-					break
 
 eval_x = np.array(eval_x).reshape(-1,66,256,5)
 #print(eval_x.shape)
 eval_y = np.array(eval_y)
 #print(eval_y.shape)
 # finish makeing evaluation data
+
+model.load(MODEL_NAME)
+
+eval = model.evaluate(eval_x, eval_y)
+
+print(eval)
 
 
 

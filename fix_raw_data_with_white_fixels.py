@@ -16,16 +16,11 @@ for file in file_list:
 	if file.endswith('.npy'):
 		print(file)
 		file_location = "/raw_data/" + file
-		loaded_data = np.load(file_location)
+		loaded_file = np.load(file_location)
 
-		for data in loaded_data:
-			frame = data[0][70:-5,::]
-			cv2.imshow('frame', frame)
-			print(frame.shape, data[1])
-		
-			if cv2.waitKey(1) & 0xFF == ord('q'):
-				break
-
+		fixed_file = loaded_file[45:]
+		file_name ="/raw_data/" + "fixed_" + str(file)
+		np.save(file_name, fixed_file)
 '''
 data after resize
 width : 256

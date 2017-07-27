@@ -64,11 +64,15 @@ def get_angle():
 
 def main():
 	while True:
-        start = time.time()
+		# discard first 40 frames to give time for webcam to get the proper exposure
+		for _ in range(40):
+			get_angle()
+			get_frame()
+
 		angle = get_angle()
 		frame = get_frame()
 		raw_data.append([frame, angle])
-		print(frame.shape[0], frame.shape[1], angle, 1/(time.time() - start))
+		print(frame.shape[0], frame.shape[1], angle)
 
         # if cv2.waitKey(1) & 0xFF == ord('q'):
         #     break   
