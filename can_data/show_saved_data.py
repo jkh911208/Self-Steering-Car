@@ -1,8 +1,8 @@
 import numpy as np 
 import time
 
-f = open("left_to_right.txt","w")
-loaded_data = np.load("left_to_right.npy")
+f = open("right_to_left.txt","w")
+loaded_data = np.load("right_to_left.npy")
 
 for i in loaded_data:
 	msg = i
