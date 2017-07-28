@@ -15,7 +15,7 @@ file_list = os.listdir('/raw_data')
 for file in file_list:
 	if file.endswith('.npy'):
 		print(file)
-		file_location = "/raw_data/" + file
+		file_location = "/raw_data/" +  file
 		loaded_data = np.load(file_location)
 
 		for data in loaded_data:

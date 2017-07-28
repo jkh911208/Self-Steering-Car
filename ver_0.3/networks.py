@@ -15,7 +15,7 @@ def googLeNet(height, width, LR):
 	    - [GoogLeNet Paper](http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf)
 	"""
 	# image in the array form the height comes first and then the width
-	network = input_data(shape=[None,height, width, 1])
+	network = input_data(shape=[None, height, width, 1])
 	conv1_7_7 = conv_2d(network, 64, 7, strides=2, activation='relu', name = 'conv1_7_7_s2')
 	pool1_3_3 = max_pool_2d(conv1_7_7, 3,strides=2)
 	pool1_3_3 = local_response_normalization(pool1_3_3)
@@ -131,7 +131,7 @@ def googLeNet(height, width, LR):
 
 	network = regression(loss, optimizer='adam',
 		             loss='mean_square',
-		             learning_rate=LR, metirc=R2)
+		             learning_rate=LR)
 
 	model = tflearn.DNN(network, tensorboard_verbose=0)
 

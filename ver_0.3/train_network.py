@@ -2,6 +2,7 @@ import numpy as np
 import os
 import cv2
 
+
 from networks import googLeNet
 
 WIDTH = 256
@@ -11,6 +12,8 @@ EPOCHS = 10
 MODEL_NAME = 'Self-Steering-Car-{}-{}-{}-epochs.model'.format('googLeNet', LR , EPOCHS)
 
 model = googLeNet(HEIGHT,WIDTH, LR)
+
+
 
 # start training
 file_list = os.listdir('/raw_data')
@@ -25,6 +28,7 @@ for file in file_list:
 			# flip the frame because the webcam is mounted upside down on the front windsheild, and cut out the sky portion of the image the size became 256*66
 			tmp = cv2.flip(data[0],0)
 			tmp = cv2.flip(tmp,1)
+			tmp = cv2.cvtColor(tmp, cv2.COLOR_BGR2GRAY)
 			data[0] = (tmp[70:-5,::]).reshape(66,256,1)
 
 
@@ -53,18 +57,14 @@ for file in file_list:
 			num_in_string = str(int_data) + "." + str(int_decimal)
 			final_data = float(num_in_string)
 			data[1] = final_data
-		
-		train = loaded_data[:-100]
-		test = loaded_data[-100:]
+			#print(final_data)
 
-		train_X = np.array([i[0] for i in train]).reshape(-1, HEIGHT,WIDTH,1)
-		train_Y = np.array([i[1] for i in train]).reshape(-1,1)
-
-		val_X = np.array([i[0] for i in test]).reshape(-1, HEIGHT,WIDTH,1)
-		val_Y = np.array([i[1] for i in test]).reshape(-1,1)
+		train_X = np.array([i[0] for i in loaded_data]).reshape(-1, HEIGHT,WIDTH,1)
+		train_Y = np.array([i[1] for i in loaded_data]).reshape(-1,1)
 
 
-		
-		model.fit(train_X, train_Y, n_epoch=EPOCHS, run_id=MODEL_NAME, show_metric=True, validation_set=(val_X,val_Y))
+
+		model.fit(train_X, train_Y, n_epoch=EPOCHS, run_id=MODEL_NAME, show_metric=True)
 
 		model.save(MODEL_NAME)
+

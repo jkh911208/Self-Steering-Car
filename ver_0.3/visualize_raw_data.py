@@ -19,7 +19,9 @@ for file in file_list:
 		loaded_data = np.load(file_location)
 
 		for data in loaded_data:
-			frame = data[0][70:-5,::]
+			tmp = cv2.flip(data[0],0)
+			tmp = cv2.flip(tmp,1)
+			frame = tmp[70:-5,::]
 			cv2.imshow('frame', frame)
 			print(frame.shape, data[1])
 		

@@ -26,8 +26,9 @@ signal.signal(signal.SIGINT, signal_handler)
 def get_frame():
 	# read the frame from webcam
 	_, frame = cap.read()
+
 	# change the color to gray
-	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+	#frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
 	# change the resolution (256*141), later cut the sky
 	frame = cv2.resize(frame,(0,0),fx=0.8, fy=0.8)
@@ -45,12 +46,14 @@ def get_angle():
     return can_data
 
 def main():
-	while True:
-		# discard first 40 frames to give time for webcam to get the proper exposure
-		for _ in range(40):
+
+	# discard first 40 frames to give time for webcam to get the proper exposure
+	for i in range(40):
 			get_angle()
 			get_frame()
+			print(i, "discarded")
 
+	while True:
 		angle = get_angle()
 		frame = get_frame()
 		raw_data.append([frame, angle])
