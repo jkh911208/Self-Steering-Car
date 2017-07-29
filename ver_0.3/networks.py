@@ -1,9 +1,61 @@
 import tflearn
 from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.conv import conv_2d, max_pool_2d, avg_pool_2d
-from tflearn.layers.normalization import local_response_normalization
+from tflearn.layers.normalization import local_response_normalization, batch_normalization
 from tflearn.layers.merge_ops import merge
 from tflearn.layers.estimator import regression
+
+from tflearn.layers.core import input_data, dropout, fully_connected
+from tflearn.layers.conv import conv_2d, max_pool_2d
+from tflearn.layers.normalization import local_response_normalization
+from tflearn.layers.estimator import regression
+
+def AlexNet(height, width,channel, LR):
+	# Building 'AlexNet'
+	network = input_data(shape=[None, height, width, channel])
+
+	network = batch_normalization(network)
+
+	network = conv_2d(network, 96, 11, strides=4, activation='relu')
+	network = max_pool_2d(network, 3, strides=2)
+
+	network = local_response_normalization(network)
+
+	network = conv_2d(network, 256, 5, activation='relu')
+	network = max_pool_2d(network, 3, strides=2)
+
+	network = local_response_normalization(network)
+
+	network = conv_2d(network, 384, 3, activation='relu')
+	network = conv_2d(network, 384, 3, activation='relu')
+	network = conv_2d(network, 256, 3, activation='relu')
+	network = max_pool_2d(network, 3, strides=2)
+
+	network = local_response_normalization(network)
+
+	network = fully_connected(network, 4096, activation='relu')
+	network = dropout(network, 0.5)
+	network = fully_connected(network, 2048, activation='relu')
+	network = dropout(network, 0.5)
+	network = fully_connected(network, 1024, activation='relu')
+	network = dropout(network, 0.5)
+	network = fully_connected(network, 512, activation='relu')
+	network = dropout(network, 0.5)
+	network = fully_connected(network, 256, activation='relu')
+	network = dropout(network, 0.5)
+	network = fully_connected(network, 50, activation='relu')
+
+	network = fully_connected(network, 1, activation='linear')
+
+	network = regression(network, optimizer='adam',
+		             loss='mean_square',
+		             learning_rate=LR)
+
+	# Training
+	model = tflearn.DNN(network, checkpoint_path='model_alexnet',
+		            max_checkpoints=1, tensorboard_verbose=0)
+
+	return model
 
 def googLeNet(height, width, LR):
 
@@ -125,9 +177,9 @@ def googLeNet(height, width, LR):
 	inception_5b_output = merge([inception_5b_1_1, inception_5b_3_3, inception_5b_5_5, inception_5b_pool_1_1], axis=3, mode='concat')
 
 	pool5_7_7 = avg_pool_2d(inception_5b_output, kernel_size=7, strides=1)
-	pool5_7_7 = dropout(pool5_7_7, 0.4)
+	#pool5_7_7 = dropout(pool5_7_7, 0.4)
 
-	loss = fully_connected(pool5_7_7, 1,activation='linear')
+	loss = fully_connected(pool5_7_7, 1, activation='linear')
 
 	network = regression(loss, optimizer='adam',
 		             loss='mean_square',
