@@ -5,12 +5,12 @@ import time
 
 WIDTH = 256
 HEIGHT = 66
-CHANNEL = 3
+CHANNEL = 1
 
 from networks import googLeNet, AlexNet
 
 LR = 1e-2
-EPOCHS = 50
+EPOCHS = 10
 MODEL_NAME = 'Self-Steering-Car-{}-{}-{}-epochs.model'.format('AlexNet', LR , EPOCHS)
 
 model = AlexNet(HEIGHT,WIDTH,CHANNEL, LR)
@@ -47,11 +47,12 @@ for file in file_list:
 			data[1] = final_data
 		
 		loaded_data = loaded_data[30:]
-		val_X = np.array([i[0] for i in loaded_data]).reshape(-1, HEIGHT,WIDTH,CHANNEL)
-		val_Y = np.array([i[1] for i in loaded_data]).reshape(-1,1)
+		val_X = np.array([i[0] for i in loaded_data]).reshape([-1, HEIGHT,WIDTH,CHANNEL])
+		val_Y = np.array([i[1] for i in loaded_data]).reshape([-1,1])
 
 # prepare data for training
 file_list = os.listdir('/raw_data')
+
 for file in file_list:
 	if file.endswith('.npy'):
 		print("Start training on file : " + file)
@@ -106,8 +107,8 @@ for file in file_list:
 		# but seems like still the white out frames exist
 
 		loaded_data = loaded_data[30:]
-		train_X = np.array([i[0] for i in loaded_data]).reshape(-1, HEIGHT,WIDTH,CHANNEL)
-		train_Y = np.array([i[1] for i in loaded_data]).reshape(-1,1)
+		train_X = np.array([i[0] for i in loaded_data]).reshape([-1, HEIGHT,WIDTH,CHANNEL])
+		train_Y = np.array([i[1] for i in loaded_data]).reshape([-1,1])
 		'''
 		for frame in train_X:
 			cv2.imshow('frame', frame)

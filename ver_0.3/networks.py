@@ -47,7 +47,7 @@ def AlexNet(height, width,channel, LR):
 
 	network = fully_connected(network, 1, activation='linear')
 
-	network = regression(network, optimizer='adam',
+	network = regression(network, optimizer='momentum',
 		             loss='mean_square',
 		             learning_rate=LR)
 
