@@ -1,5 +1,4 @@
 #!/usr/bin/env python 
-from __future__ import division
 
 import os
 import tensorflow as tf
@@ -19,18 +18,18 @@ sess.run(tf.global_variables_initializer())
 
 # create a summary to monitor cost tensor
 # if write_summary:
-#     tf.summary.scalar("loss", loss)
+# 	tf.summary.scalar("loss", loss)
 
 # merge all summaries into a single op
 # if write_summary:
-#     merged_summary_op = tf.summary.merge_all()
+# 	merged_summary_op = tf.summary.merge_all()
 
 # saver = tf.train.Saver()
 time_start = time.time()
 
 # op to write logs to Tensorboard
 # if write_summary:
-#     summary_writer = tf.summary.FileWriter(params.save_dir, graph=tf.get_default_graph())
+# 	summary_writer = tf.summary.FileWriter(params.save_dir, graph=tf.get_default_graph())
 
 
 # make the val data
@@ -130,15 +129,12 @@ for i in range(params.epoch):
 				v_loss = loss.eval(feed_dict={model.x: val_X, model.y_: val_Y, model.keep_prob: 1.0})
 				print ("epoch {} of {}, batch {} of {}, train loss {}, val loss {}".format(i, params.epoch,iteration,batch_iteration,t_loss, v_loss))
 
-			# if (i+1) % 100 == 0:
-			#     if not os.path.exists(params.save_dir):
-			#         os.makedirs(params.save_dir)
-			#     checkpoint_path = os.path.join(params.save_dir, "model.ckpt")
-			#     filename = saver.save(sess, checkpoint_path)
+			# if (i+1) % 10 == 0:
+			# 	if not os.path.exists(params.save_dir):
+ 		# 			os.makedirs(params.save_dir)
+			# 	checkpoint_path = os.path.join(params.save_dir, "model.ckpt")
+			# 	filename = saver.save(sess, checkpoint_path)
 
-			#     time_passed = cm.pretty_running_time(time_start)
-			#     time_left = cm.pretty_time_left(time_start, i, params.training_steps)
-			#     print 'Model saved. Time passed: {}. Time left: {}'.format(time_passed, time_left) 
 
 
 			    
