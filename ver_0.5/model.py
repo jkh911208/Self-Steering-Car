@@ -19,14 +19,11 @@ y_ = tf.placeholder(tf.float32, shape=[None, 1])
 x_image = tf.reshape(x, [-1, params.img_height, params.img_width, params.img_channels])
 # print(x_image)
 
-batch_norm = tf.layers.batch_normalization(x_image)
-print("batch_norm : ", batch_norm)
-
 # first convolutional layer
 W_conv1 = weight_variable([5, 5, params.img_channels, 24])
 b_conv1 = bias_variable([24])
 
-h_conv1 = tf.nn.relu(conv2d(batch_norm, W_conv1, 2) + b_conv1)
+h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1, 2) + b_conv1)
 print(h_conv1)
 
 # second convolutional layer

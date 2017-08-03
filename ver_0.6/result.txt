@@ -1,0 +1,6 @@
+Comprare to ver_0.5, instead of gray image used color image, but it seems like doesn't really matters
+Came out with same result as the ver_0.5
+
+66*256*3
+
+loss : 31.6
