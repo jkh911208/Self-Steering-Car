@@ -3,4 +3,4 @@ Came out with same result as the ver_0.5
 
 66*256*3
 
-loss : 31.6
+loss : 39.6

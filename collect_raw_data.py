@@ -46,6 +46,7 @@ def get_angle():
     return can_data
 
 def main():
+	global raw_data
 
 	# discard first 40 frames to give time for webcam to get the proper exposure
 	for i in range(40):
@@ -57,10 +58,11 @@ def main():
 		angle = get_angle()
 		frame = get_frame()
 		raw_data.append([frame, angle])
-
-		print(frame.shape[0], frame.shape[1], angle)
 		
-		if len(raw_data) > 5000:
+		if len(raw_data) % 1000 == 0:
+			print(len(raw_data))
+		'''		
+		if len(raw_data) == 5000:
 			pid = os.fork()
 			if pid == 0:
 				name = str(time.time())
@@ -70,7 +72,7 @@ def main():
 				exit(0)
 			else:
 				raw_data = []
-			
+		'''			
 
 main()
 
