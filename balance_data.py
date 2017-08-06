@@ -2,19 +2,15 @@ import os
 import numpy as np
 from random import shuffle
 
-data_set = {'-0': 0}
 for i in range(-20,21):
-	string = str(i)
+	string = "
 	data_set[string] = 0
 
+'''
 print(data_set)
 
 file_list = os.listdir('/raw_data')
-print(file_list)
-file_list = list(file_list)
-print(file_list)
-file_list = shuffle(list(file_list))
-print(file_list)
+#print(file_list)
 for file_name in file_list:
 	if file_name.endswith('.npy'):
 		# print(file_name)
@@ -50,8 +46,12 @@ for file_name in file_list:
 				# print(string)
 				data_set[string] = data_set[string] + 1
 
-print(data_set)
+for i in range(-20,21):
+	if i == 0:
+		print("data_set[-0] = ", data_set['-0'])
+	string = str(i)
+	print("data_set[{}] = ".format(string), data_set[string])
 
 
 
-
+'''
