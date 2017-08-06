@@ -31,6 +31,8 @@ for i in range(params.epoch):
 		    	#finishing getting the training data
 		
 			# start the train on the data
+
+			# seperate the data into batch size
 			batch_iteration = int(train_X.shape[0] / params.batch) + 1
 			for iteration in range(batch_iteration):
 				batch_X = train_X[iteration*params.batch:(iteration+1)*params.batch]

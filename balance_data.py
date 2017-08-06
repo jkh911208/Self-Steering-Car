@@ -1,10 +1,67 @@
 import os
 import numpy as np
 from random import shuffle
+# os.path.exists("/etc/password.txt")
+'''
 
-for i in range(-20,21):
-	string = "
-	data_set[string] = 0
+# amount of lists you want to create
+for i in range(0,16):
+	plus = "" # this line is here to clear out the previous command
+	plus = "plus" + str(i) + " = []"
+	minus = "" # this line is here to clear out the previous command
+	minus = "minus" + str(i) + " = []"
+	exec(plus)
+	exec(minus)
+
+print(plus5)
+
+for i in range(0,16):
+	plus = "plus{}".format(i)
+	print(list(plus))
+'''
+minus = []
+plus =
+for i in range(0,16):
+	minus[i] = []
+	plis[i] = []
+
+
+print(minus, plus)
+
+'''
+plus_15 = []
+plus_14 = []
+plus_13 = []
+plus_12 = []
+plus_11 = []
+plus_10 = []
+plus_9 = []
+plus_8 = []
+plus_7 = []
+plus_6 = []
+plus_5 = []
+plus_4 = []
+plus_3 = []
+plus_2 = []
+plus_1 = []
+plus_0 = []
+minus_0 = []
+minus_1 = []
+minus_2 = []
+minus_3 = []
+minus_4 = []
+minus_5 = []
+minus_6 = []
+minus_7 = []
+minus_8 = []
+minus_9 = []
+minus_10 = []
+minus_11 = []
+minus_12 = []
+minus_13 = []
+minus_14 = []
+minus_15 = []
+'''
 
 '''
 print(data_set)
