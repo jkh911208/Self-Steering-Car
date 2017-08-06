@@ -19,7 +19,7 @@ def val_data():
 			for data in loaded_data:
 				tmp = cv2.flip(data[0],0)
 				tmp = cv2.flip(tmp,1)
-				if params.img_channels == 1:
+				if params.img_channels != 3:
 					tmp = cv2.cvtColor(tmp, cv2.COLOR_BGR2GRAY)
 				data[0] = (tmp[70:-5,::]).reshape(params.img_height, params.img_width, params.img_channels)
 
