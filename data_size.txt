@@ -1,2 +1,7 @@
 width : 256
 height : 141
+
+after 
+
+width 256
+height 66

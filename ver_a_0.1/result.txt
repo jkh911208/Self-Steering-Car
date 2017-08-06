@@ -1,5 +1,0 @@
-Compare to ver_0.7.1 the output layer have been changed
-
-66*5,256,1
-
-loss : 31.9
