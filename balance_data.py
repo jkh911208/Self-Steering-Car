@@ -85,7 +85,7 @@ batch_size = 100
 batch = int(data_size / batch_size)
 #print(data_size/batch_size , batch)
 for j in range(batch):
-	temp = []
+	temp_list = []
 	for i in range(0,16):
 		temp_minus = minus[i][j*batch_size:(j+1)*batch_size]
 		#print("temp_minus : " , len(temp_minus))
@@ -93,15 +93,15 @@ for j in range(batch):
 		#print("temp_plus : ", len(temp_plus))
 
 		for y in range(len(temp_minus)):
-			temp.append([temp_minus[y]])
-			temp.append([temp_plus[y]])
+			temp_list.append([temp_minus[y]])
+			temp_list.append([temp_plus[y]])
 
 		#print("temp : ", len(temp))
 
 	name = str(time.time())
 	file_name = "/raw_data/balanced_data/" + name + ".npy"
-	#print(len(temp))	
-	np.save(file_name,temp)
+	#print(len(temp_list))	
+	np.save(file_name,temp_list)
 	print("Saved file name : ",name + ".npy")
 
 
