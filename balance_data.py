@@ -2,9 +2,8 @@ import os
 import numpy as np
 import time
 from random import shuffle
-# os.path.exists("/etc/password.txt")
 
-data_size = 500
+data_size = 512
 minus = []
 plus = []
 for i in range(0,16):
@@ -43,32 +42,18 @@ for file_name in file_list:
 
 			if int_data == 0:
 				if int_data > steering_angle:
-					minus[int_data].append([data])
+					minus[int_data].append([data[0], data[1]])
 				else:
-					plus[int_data].append([data])
+					plus[int_data].append([data[0], data[1]])
 			elif int_data > 0:
-				plus[int_data].append([data])
+				plus[int_data].append([data[0], data[1]])
 			else:
 				int_data = int_data * -1
-				minus[int_data].append([data])
-for i in range(0,16):
-	shuffle(minus[i])
-	shuffle(plus[i]) 
-
-	minus[i] = minus[i][:data_size]
-	plus[i] = plus[i][:data_size]
+				minus[int_data].append([data[0], data[1]])
 
 for i in range(0,16):
-	if len(minus[i]) != data_size:
-		while True:
-			minus[i].append(minus[i])
-			if len(minus[i]) >= data_size:
-				break
-	if len(plus[i]) != data_size:
-		while True:
-			plus[i].append(plus[i])
-			if len(plus[i]) >= data_size:
-				break
+	print("minus[{}] :".format(i),len(minus[i]),"plus[{}] :".format(i), len(plus[i]))
+
 
 for i in range(0,16):
 	shuffle(minus[i])
@@ -81,60 +66,49 @@ for i in range(0,16):
 for i in range(0,16):
 	print("minus[{}] :".format(i),len(minus[i]),"plus[{}] :".format(i), len(plus[i]))
 
-batch_size = 100
+
+for i in range(0,16):
+	if len(minus[i]) != data_size:
+		while True:
+			minus[i] = minus[i] + minus[i] 
+			if len(minus[i]) >= data_size:
+				break
+
+	if len(plus[i]) != data_size:
+		while True:
+			plus[i] = plus[i] + plus[i] 
+			if len(plus[i]) >= data_size:
+				break
+for i in range(0,16):
+	print("minus[{}] :".format(i),len(minus[i]),"plus[{}] :".format(i), len(plus[i]))
+
+for i in range(0,16):
+	shuffle(minus[i])
+	shuffle(plus[i]) 
+
+	minus[i] = minus[i][:data_size]
+	plus[i] = plus[i][:data_size]
+
+for i in range(0,16):
+	print("minus[{}] :".format(i),len(minus[i]),"plus[{}] :".format(i), len(plus[i]))
+
+
+batch_size = 64
 batch = int(data_size / batch_size)
 #print(data_size/batch_size , batch)
+
 for j in range(batch):
 	temp_list = []
 	for i in range(0,16):
-		temp_minus = minus[i][j*batch_size:(j+1)*batch_size]
+		temp_list = temp_list + minus[i][j*batch_size:(j+1)*batch_size]
 		#print("temp_minus : " , len(temp_minus))
-		temp_plus = plus[i][j*batch_size:(j+1)*batch_size]
+		temp_list = temp_list + plus[i][j*batch_size:(j+1)*batch_size]
 		#print("temp_plus : ", len(temp_plus))
-
-		for y in range(len(temp_minus)):
-			temp_list.append([temp_minus[y]])
-			temp_list.append([temp_plus[y]])
-
-		#print("temp : ", len(temp))
 
 	name = str(time.time())
 	file_name = "/raw_data/balanced_data/" + name + ".npy"
-	#print(len(temp_list))	
+	print(len(temp_list))
+	shuffle(temp_list)
 	np.save(file_name,temp_list)
 	print("Saved file name : ",name + ".npy")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
