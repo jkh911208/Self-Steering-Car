@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 
 def train_data(file_name):
-	file_location = "/raw_data/" + file_name
+	file_location = "/raw_data/balanced_data/" + file_name
 	loaded_data = np.load(file_location)
 
 	# change the saved data into the form that both human and NN can understand
@@ -36,8 +36,8 @@ def train_data(file_name):
 		#print(final_data)
 	#did cut out the first few frames because the webcam need time to adjust the exposure
 	# but seems like still the white out frames exist
-
-	loaded_data = loaded_data[30:]
+	
+	#loaded_data = loaded_data[30:]
 	train_X = np.array([i[0] for i in loaded_data]).reshape([-1, params.img_height,params.img_width,params.img_channels])
 	train_Y = np.array([i[1] for i in loaded_data]).reshape([-1,1])
 

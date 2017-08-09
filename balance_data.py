@@ -17,6 +17,7 @@ for file_name in file_list:
 		print(file_name)
 		file_location = "/raw_data/" + file_name
 		loaded_data = np.load(file_location)
+		loaded_data = loaded_data[30:]
 
 		for data in loaded_data:
 			# change the can data (HEX) to numerical data
