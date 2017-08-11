@@ -92,7 +92,7 @@ for i in range(0,16):
 
 for i in range(0,16):
 	print("minus[{}] :".format(i),len(minus[i]),"plus[{}] :".format(i), len(plus[i]))
-
+	
 
 batch_size = 64
 batch = int(data_size / batch_size)

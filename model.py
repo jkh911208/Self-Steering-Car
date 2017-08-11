@@ -82,15 +82,6 @@ network = tf.layers.dropout(network, rate=keep_prob, name="dropout_2")
 if print_layer:
 	print(network)
 
-# # Dense Layer 3
-
-# network = tf.layers.dense(network, 1000, activation=tf.nn.relu, name="dense_3")
-# if print_layer:
-# 	print(network)
-# network = tf.layers.dropout(network, rate=keep_prob, name="dropout_3")
-# if print_layer:
-# 	print(network)
-
 # output layer
 
 # activation=None => linear

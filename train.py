@@ -13,9 +13,12 @@ from get_train_data import train_data
 
 sess = tf.InteractiveSession()
 
-loss = tf.reduce_mean(tf.square(tf.subtract(model.y_, model.y)))
+# loss = tf.losses.absolute_difference(model.y_, model.y)
+loss = tf.losses.mean_squared_error(model.y_, model.y)
 train = tf.train.AdamOptimizer(1e-4).minimize(loss)
 acc = tf.reduce_mean(tf.abs(tf.div(tf.subtract(model.y_, model.y), model.y)))
+
+saver = tf.train.Saver()
 
 sess.run(tf.global_variables_initializer())
 
@@ -47,6 +50,9 @@ for i in range(params.epoch):
 				#v_acc = acc.eval(feed_dict={model.x: val_X, model.y_: val_Y, model.keep_prob: 1.0})
 
 				print ("epoch {} of {}, batch {} of {}, train loss {}, val loss {}".format(i, params.epoch,iteration,batch_iteration,t_loss, v_loss))
+
+	model_name = "MSE_{}.model".format(i)
+	save_path = saver.save(sess, model_name)
 
 
 
