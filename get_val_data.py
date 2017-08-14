@@ -32,7 +32,7 @@ def val_data():
 
 				# if the steering wheel angle in in right to the center
 				if(int_data > 550):
-					int_data = int_data - 4095
+					int_data = int_data - 4096
 					int_decimal = 1 - int_decimal 
 					final_data = int_data - int_decimal
 				else:

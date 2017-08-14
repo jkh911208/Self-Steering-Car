@@ -51,7 +51,7 @@ for i in range(params.epoch):
 
 				print ("epoch {} of {}, batch {} of {}, train loss {}, val loss {}".format(i, params.epoch,iteration,batch_iteration,t_loss, v_loss))
 
-	model_name = "MSE_{}.model".format(i)
+	model_name = "./weight/MSE_without-0_{}.model".format(i)
 	save_path = saver.save(sess, model_name)
 
 

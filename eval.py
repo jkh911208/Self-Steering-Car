@@ -9,7 +9,7 @@ import numpy as np
 
 sess = tf.InteractiveSession()
 saver = tf.train.Saver()
-saver.restore(sess, "./model_1")
+saver.restore(sess, "./weight/MSE_without-0_4.model")
 
 file_list = os.listdir('/raw_data/eval_data')
 for file in file_list:
