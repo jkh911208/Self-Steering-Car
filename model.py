@@ -11,8 +11,8 @@ keep_prob = tf.placeholder(tf.float32)
 x_image = tf.reshape(x, [-1, params.network_height, params.img_width, params.img_channels])
 
 # Conv Layer # 1
-network = tf.layers.conv2d(x_image, filters=96, kernel_size = (11,11), strides=(4,4), 
-	padding='same', activation=tf.nn.relu, use_bias=True,name="conv_1")
+network = tf.layers.conv2d(x_image, filters=64, kernel_size = (7,7), strides=(2,2), 
+	padding='same', activation=tf.nn.relu, use_bias=False,name="conv_1")
 if print_layer:
 	print(network)
 network = tf.layers.max_pooling2d(network, pool_size=(3,3), strides=2, padding='same', 
@@ -25,8 +25,8 @@ if print_layer:
 
 # Conv Layer #2
 
-network = tf.layers.conv2d(network, filters=256, kernel_size = (5,5), strides=(1,1), 
-	padding='same', activation=tf.nn.relu, use_bias=True,name="conv_2")
+network = tf.layers.conv2d(network, filters=128, kernel_size = (5,5), strides=(1,1), 
+	padding='same', activation=tf.nn.relu, use_bias=False,name="conv_2")
 if print_layer:
 	print(network)
 network = tf.layers.max_pooling2d(network, pool_size=(3,3), strides=2, padding='same', 
@@ -39,7 +39,7 @@ if print_layer:
 
 # Conv Layer #3
 
-network = tf.layers.conv2d(network, filters=384, kernel_size = (3,3), strides=(1,1), 
+network = tf.layers.conv2d(network, filters=256, kernel_size = (3,3), strides=(1,1), 
 	padding='same', activation=tf.nn.relu, use_bias=True,name="conv_3_1")
 if print_layer:
 	print(network)
@@ -47,8 +47,8 @@ network = tf.layers.conv2d(network, filters=256, kernel_size = (3,3), strides=(1
 	padding='same', activation=tf.nn.relu, use_bias=True,name="conv_3_2")
 if print_layer:
 	print(network)
-network = tf.layers.conv2d(network, filters=32, kernel_size = (3,3), strides=(1,1), 
-	padding='same', activation=tf.nn.relu, use_bias=True,name="conv_3_3")
+network = tf.layers.conv2d(network, filters=16, kernel_size = (3,3), strides=(1,1), 
+	padding='same', activation=tf.nn.relu, use_bias=False,name="conv_3_3")
 if print_layer:
 	print(network)
 network = tf.layers.max_pooling2d(network, pool_size=(3,3), strides=2, padding='same', 
@@ -60,7 +60,7 @@ if print_layer:
 	print(network)
 
 # Flatten
-network = tf.reshape(network, [-1, 768], name="flatten")
+network = tf.reshape(network, [-1, 1280], name="flatten")
 if print_layer:
 	print(network)
 
