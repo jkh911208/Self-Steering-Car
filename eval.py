@@ -9,7 +9,9 @@ import numpy as np
 
 sess = tf.InteractiveSession()
 saver = tf.train.Saver()
-saver.restore(sess, "./weight/MSE_without-0_4.model")
+saver.restore(sess, "./weight/SSC_epoch_14_LR_0.0001.model")
+
+data_list = []
 
 file_list = os.listdir('/raw_data/eval_data')
 for file in file_list:
@@ -34,7 +36,7 @@ for file in file_list:
 
 			# if the steering wheel angle in in right to the center
 			if(int_data > 550):
-				int_data = int_data - 4095
+				int_data = int_data - 4096
 				int_decimal = 1 - int_decimal 
 				final_data = int_data - int_decimal
 			else:
@@ -43,7 +45,13 @@ for file in file_list:
 
 			deg = model.y.eval(feed_dict={model.x: [img], model.keep_prob: 1.0})[0][0]
 
-			print(deg, final_data)
+			difference = ((final_data+16)-(deg+16))/(final_data+16)
+			if difference < 0:
+				difference = difference * -1
+			difference = difference * 100
+			print(deg, final_data, difference)
+
+
 
 
 			    
