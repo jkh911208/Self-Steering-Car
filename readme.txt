@@ -1,35 +1,52 @@
-2017 Summer Personal Project on Deep Learning with Tensorflow
+#2017 Summer Personal Machine Learning (Deep Learning) Project (Linear Regression)
 
-1. Prepare Hardware
-2. Collect Data
-3. Design Model
-4. Prepare the Data
-5. Train the Model
-6. Test the Model
+Inspiration:
+Project was inspired by "Deeptesla" (https://github.com/lexfridman/deeptesla.git)
 
+Description:
+Use TensorFlow to Inference the steering wheel angle only based on the single front image
 
-<1> Prepare Hardware
+<1> Developing Environment
 
-	I used Nvidia Jetson TX2 single board computer for both collecting the data and training the network. 
+(Hardware)
+- Nvidia Jetson TX2 (256 Pascal CUDA Cores, 8GB shared RAM)
+- Texas Instrument SN65HVD230 (Can bus transceiver)
+- Toyota 2016 Camry LE
+- Wires and Electricity (12V DC)
+- Logitech Webcam (Cheapest possible from Micro Center)
 
-	Installed a cheap (<$20) usb webcam on the front windsheild, Since the CNN do not require the high resolution, so it was a decent option for me. For the better image quility you can use some more expansive webcam such as c920, which is widely used for the robot.
-
-	2016 Toyota Camry. I used can bus in my car to get the steering wheel angle data. In order to do so, I had to connect the extra cable from back of the radio head (canH, canL) and wired a ACC power (12v, DC) for the main power source for the Jetson TX2.
+(Software)
+- Tensorfow v1.0.1 
+- Python3
+- OpenCV 3.2
+- Numpy
 
 <2> Collect Data
 
+I drove my car by myself and at the same time collecting the data. It is possible to connect the keyboard to the Jetson TX2 and run the Python code, but I found that it is more convenient to use the serial port in the GPIO port and connect to my MacBook and run the script. 
+
 <3> Design Model
 
-	Input is the video frame from the usb webcam and the output is the steering wheel angle from the can bus. 
+Network: Modified AlexNet to fit my model
 
-	Used googLeNEt for the main network. This is the linear regression problem, so the activation function for the last layer is "linear" and the cost function I used "Mean Squre Error". Used "Adam" optimizer and "1e-2" for the LR.
+Loss: Mean Squared Error
 
 <4> Prepare the Data
+I resized the frame into size of [66,256,1] which I personally thought is good enough for the CNN. 
 
-	For the image file it was easy. convert it to the gray image and cut out the sky portion of the image
+I could find that the Toyota uses the "ID : 0x025" as the steering wheel angle. I found that they are using the signed data, fixed point decimal. For more detail please check the code.
 
-	For the steering angle data, I had to reverse engineer the can bus data from Toyota. I found that they are using the signed and the fixed point type. The first two bytes were representing the int value before the decimal and the last byte was representing the numbers after the decimal. I think this is not the best way to decode the can bus data, but I believe this is enough accurate for the personal project. 
+(Balance Data)
+Steering wheel usually don't change a lot in the real world driving environment. Therefore, the data was extremely imbalanced. I spend lots of time balancing the data.
 
-<5> Train the Model
+Lessons Learned:
 
-<6> Test the Model
+1. Hardware: CNN requires big amount of memory, if the dataset don't fit into the memory, then cut it down to smaller batch.
+2. Network: Before I start this project I thought the network will make huge difference in linear regression problem, because it does make huge difference in categorical problem. However, I found that the linear regression problem doesn't hugely affected by the network
+3. Data: It was challenging to make the data into the dataset and balance the data prevent from biased weight.
+	
+	
+	
+![img_0727](https://user-images.githubusercontent.com/17028674/29475615-232babb8-8426-11e7-89d8-c67fd8f23467.JPG)
+![img_7048](https://user-images.githubusercontent.com/17028674/29475617-2866a7b8-8426-11e7-92a6-b8eb1eb4132b.JPG)
+
