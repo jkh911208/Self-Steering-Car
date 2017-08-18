@@ -41,11 +41,11 @@ Steering wheel usually don't change a lot in the real world driving environment.
 
 # Lessons Learned:
 
-# 1. Hardware
+## 1. Hardware
   CNN requires big amount of memory, if the dataset don't fit into the memory, then cut it down to smaller batch.
-# 2. Network 
+## 2. Network 
   Before I start this project I thought the network will make huge difference in linear regression problem, because it does make huge difference in categorical problem. However, I found that the linear regression problem doesn't hugely affected by the network
-# 3. Data
+## 3. Data
   It was challenging to make the data into the dataset and balance the data prevent from biased weight.
 
 
